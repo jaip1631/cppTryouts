@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "unordered_map": "cpp",
+        "array": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp",
+        "deque": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp",
+        "functional": "c",
+        "istream": "c",
+        "tuple": "c",
+        "cmath": "c",
+        "cstdlib": "c"
+    }
+}
