@@ -14,6 +14,7 @@
         "cmath": "c",
         "cstdlib": "c",
         "chrono": "cpp",
-        "limits": "cpp"
+        "limits": "cpp",
+        "list": "cpp"
     }
 }
