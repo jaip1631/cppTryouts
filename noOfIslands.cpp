@@ -72,8 +72,11 @@ int getNoOfIslands(const vector<vector<bool>> &sourceMatrix)
     {
         for (int j = 0; j < sourceMatrix[i].size(); j++)
         {
-            if(noOfIslandsRec(sourceMatrix, i, j, isVisited))
+            if(sourceMatrix[i][j] && !isVisited[i][j])
+            {
+                noOfIslandsRec(sourceMatrix, i, j, isVisited);
                 noOfIslands++;
+            }
             //printMatrix(isVisited);
         }
     }
