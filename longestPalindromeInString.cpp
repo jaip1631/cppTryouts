@@ -1,6 +1,7 @@
 // https://www.geeksforgeeks.org/longest-palindrome-substring-set-1/
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -35,7 +36,7 @@ void updateMaxPalindromeString(int &start, int len, int &maxPalindromeStart, int
 string getMaxPalindromeLength(const string &str)
 {
     if (str.empty())
-        return 0;
+        return "";
 
     int strLen = str.size(), maxPalindromeLen = 1, maxPalindromeStart = 0;
     string maxPalindromeString = "";
@@ -63,6 +64,52 @@ string getMaxPalindromeLength(const string &str)
     return str.substr(maxPalindromeStart, maxPalindromeLen);
 }
 
+void printMatrix(const vector<vector<bool>> &matrix)
+{
+    for (int i = 0; i < matrix.size(); i++)
+    {
+        for (int j = 0; j < matrix[i].size(); j++)
+        {
+            cout << matrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+
+string getMaxPalindromeLength_DP(const string &str)
+{
+    if (str.empty())
+        return "";
+    vector<vector<bool>> palindromeLengthVsEndingAt(str.size() + 1, vector<bool>(str.size() + 1, false));
+    int maxPalStartingAt = 0, maxPalLen = 1;
+
+    for (int len = 0; len < str.size() + 1; len++)
+    {
+        for (int endingAt = len; endingAt < str.size() + 1; endingAt++)
+        {
+            if (len == 0 || len == 1)
+            {
+                palindromeLengthVsEndingAt[len][endingAt] = true;
+                continue;
+            }
+
+            if (palindromeLengthVsEndingAt[len - 2][endingAt - 1] && (str[endingAt - 1] == str[endingAt - len]))
+            {
+                palindromeLengthVsEndingAt[len][endingAt] = true;
+                if (len > maxPalLen)
+                {
+                    maxPalStartingAt = endingAt - len;
+                    maxPalLen = len;
+                }
+            }
+        }
+    }
+
+    //printMatrix(palindromeLengthVsEndingAt);
+    return str.substr(maxPalStartingAt, maxPalLen);
+}
+
 int main(int argc, char const *argv[])
 {
     int testCase = 1;
@@ -71,7 +118,7 @@ int main(int argc, char const *argv[])
     while (testCase--)
     {
         cin >> str;
-        cout << getMaxPalindromeLength(str) << endl;
+        cout << getMaxPalindromeLength_DP(str) << endl;
     }
     return 0;
 }
