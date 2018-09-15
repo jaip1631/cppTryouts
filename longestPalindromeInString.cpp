@@ -22,13 +22,12 @@ int getMaxCommon(const string &str, int leftIndex, int rightIndex)
     return count;
 }
 
-void updateMaxPalindromeString(const string &str, string &maxPalindromeString, int start,
-                               int len, int &maxPalindromeLen)
+void updateMaxPalindromeString(int &start, int len, int &maxPalindromeStart, int &maxPalindromeLen)
 {
     if (len > maxPalindromeLen)
     {
         maxPalindromeLen = len;
-        maxPalindromeString = str.substr(start, len);
+        maxPalindromeStart = start;
     }
 }
 
@@ -38,8 +37,8 @@ string getMaxPalindromeLength(const string &str)
     if (str.empty())
         return 0;
 
-    int strLen = str.size(), maxPalindromeLen = 1;
-    string maxPalindromeString = str.substr(0, 1);
+    int strLen = str.size(), maxPalindromeLen = 1, maxPalindromeStart = 0;
+    string maxPalindromeString = "";
     int left = -1, palLen = -1, count = 0;
     for (int middle = 0; middle < strLen; middle++)
     {
@@ -50,18 +49,18 @@ string getMaxPalindromeLength(const string &str)
             left = middle - evenLenPal + 1;
             palLen = 2 * evenLenPal;
 
-            updateMaxPalindromeString(str, maxPalindromeString, left, palLen, maxPalindromeLen);
+            updateMaxPalindromeString(left, palLen, maxPalindromeStart, maxPalindromeLen);
         }
         else
         {
             left = middle - oddLenPal;
             palLen = 2 * oddLenPal + 1;
 
-            updateMaxPalindromeString(str, maxPalindromeString, left, palLen, maxPalindromeLen);
+            updateMaxPalindromeString(left, palLen, maxPalindromeStart, maxPalindromeLen);
         }
     }
 
-    return maxPalindromeString;
+    return str.substr(maxPalindromeStart, maxPalindromeLen);
 }
 
 int main(int argc, char const *argv[])
